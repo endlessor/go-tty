@@ -10,8 +10,8 @@ type ECode int
 // Ansi escape code constants. See
 // http://ascii-table.com/ansi-escape-sequences.php
 
+// General text attributes
 const (
-	// General text attributes
 	OFF  ECode = iota
 	BOLD       // 1
 	_
@@ -23,8 +23,8 @@ const (
 	CONCEALED // 8
 )
 
+// Foreground text attributes
 const (
-	// Foreground text attributes
 	BLACK   ECode = iota + 30
 	RED           // 31
 	GREEN         // 32
@@ -35,8 +35,8 @@ const (
 	WHITE         // 37
 )
 
+// Background text attributes
 const (
-	// Background text attributes
 	BG_GREY    ECode = iota + 40
 	BG_RED           // 41
 	BG_GREEN         // 42
@@ -68,4 +68,10 @@ func AnsiEscape(c ...interface{}) (out string) {
 		out += "\x1b[0m"
 	}
 	return
+}
+
+// AnsiEscapeS is like AnsiEscape, but takes only one escape code, and wrap the given
+// text using that code and OFF
+func AnsiEscapeS(code ECode, msg string) string {
+	return fmt.Sprintf("\x1b[%dm%s\x1b[0m", code, msg)
 }
